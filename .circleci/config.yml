@@ -1,14 +1,12 @@
 version: 2
 jobs:
  build:
-   machine: true
-   steps:
-     - checkout
-     # start proprietary DB using private Docker image
-     # with credentials stored in the UI
-     - run: |
-         echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-
+   docker: # use the Docker executor
+      # CircleCI node images available at: https://hub.docker.com/r/circleci/node/
+        auth:
+          username: lucasbrogni
+          password: $DOCKERHUB_PASSWORD 
+   steps: # steps that comprise the `build` job
      # build the application image
      - run: docker build -t lucasbrogni/feed-udagram-lucasbrogni .
      - run: docker tag feed-udagram-lucasbrogni lucasbrogni/feed-udagram-lucasbrogni
