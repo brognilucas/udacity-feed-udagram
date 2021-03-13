@@ -3,7 +3,7 @@ jobs:
   build: 
     docker: # use the Docker executor
       # CircleCI node images available at: https://hub.docker.com/r/circleci/node/
-      - image: circleci/node:10.0-browsers
+      - image: docker:17.05.0-ce-git
         auth:
           username: lucasbrogni
           password: $DOCKER_PASS  # context / project UI env-var reference
