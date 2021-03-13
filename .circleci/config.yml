@@ -1,9 +1,17 @@
-version: 2.1
-orbs:
-  node: circleci/node@3.0.0
-workflows:
-  node-tests:
-    jobs:
-      - docker --version # print the version for logging
-      - docker build -t feed-udagram-lucasbrogni .
-      - docker tag simple-node lucasbrogni/feed-udagram-lucasbrogni
+version: 2
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+     # start proprietary DB using private Docker image
+     # with credentials stored in the UI
+     - run: |
+         echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+
+     # build the application image
+     - run: docker build -t lucasbrogni/feed-udagram-lucasbrogni .
+     - run: docker tag feed-udagram-lucasbrogni lucasbrogni/feed-udagram-lucasbrogni
+
+     # deploy the image
+     - run: docker push lucasbrogni/feed-udagram-lucasbrogni
