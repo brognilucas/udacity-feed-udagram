@@ -5,15 +5,11 @@ jobs:
       # CircleCI node images available at: https://hub.docker.com/r/circleci/node/
       - image: circleci/node:10.0-browsers
         auth:
-          username: mydockerhub-user
+          username: lucasbrogni
           password: $DOCKER_PASS  # context / project UI env-var reference
     steps:
      - checkout
-     # start proprietary DB using private Docker image
-     # with credentials stored in the UI
-     - run: |
-         echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-
+   
      # build the application image
      - run: docker build -t lucasbrogni/feed-udagram-lucasbrogni .
      - run: docker tag feed-udagram-lucasbrogni lucasbrogni/feed-udagram-lucasbrogni
